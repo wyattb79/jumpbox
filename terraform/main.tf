@@ -1,28 +1,44 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "al2023" {
   most_recent = true
 
   filter {
     name = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-*"]
+    values = ["al2023-ami-2023*"]
   }
 
-  owners = ["099720109477"] # Canonical
+  filter {
+    name = "architecture"
+    values = ["x86_64"]
+  }
+
+  owners = ["amazon"]
 }
 
 data "http" "my_public_ip" {
   url = "https://ipv4.icanhazip.com"
 }
 
-resource "aws_instance" "jumpbox" {
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+resource "aws_instance" "jumpbox" {%
   instance_type = var.instance_type
-  ami = data.aws_ami.ubuntu.id
+  ami = data.aws_ami.al2023.id
   key_name = var.keypair
+  subnet_id = aws_subnet.jumpbox_subnet.id
+  associate_public_ip_address = true
+  vpc_security_group_ids = [aws_security_group.login_from_here.id]
+
+  tags = {
+    Name = "Jumpbox"
+  }
 }
 
 resource "aws_security_group" "login_from_here" {
   name        = "login-from-here"
   description = "Security group that restricts inbound traffic to my IP"
-  vpc_id      = "vpc-12345678" # Replace with your VPC ID
+  vpc_id      = var.vpc_id
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
@@ -33,4 +49,34 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   from_port   = 22
   to_port     = 22
   ip_protocol = "tcp"
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow-traffic-out" {
+  security_group_id = aws_security_group.login_from_here.id
+  cidr_ipv4 = "0.0.0.0/0"
+  ip_protocol = "-1"
+}
+
+resource "aws_subnet" "jumpbox_subnet" {
+  vpc_id = var.vpc_id
+  cidr_block = var.jumpbox_cidr
+  availability_zone = data.aws_availability_zones.available.names[0]
+  map_public_ip_on_launch = true
+}
+
+resource "aws_internet_gateway" "jumpbox_subnet_igw" {
+  vpc_id = var.vpc_id
+}
+
+resource "aws_route_table" "jumpbox_rt" {
+  vpc_id = var.vpc_id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.jumpbox_subnet_igw.id
+  }
+}
+
+resource "aws_route_table_association" "igw_assoc" {
+  subnet_id = aws_subnet.jumpbox_subnet.id
+  route_table_id = aws_route_table.jumpbox_rt.id
 }

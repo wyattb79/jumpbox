@@ -8,12 +8,12 @@ variable "keypair" {
   description = "jumpbox keypair"
 }
 
-variable "vpc" {
+variable "vpc_id" {
   type = string
   description = "jumpbox vpc"
 }
 
-variable "subnet" {
+variable "jumpbox_cidr" {
   type = string
-  description = "jumpbox subnet"
+  description = "cidr of the jumpbox subnet"
 }
