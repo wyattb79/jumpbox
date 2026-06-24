@@ -22,7 +22,7 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
-resource "aws_instance" "jumpbox" {%
+resource "aws_instance" "jumpbox" {
   instance_type = var.instance_type
   ami = data.aws_ami.al2023.id
   key_name = var.keypair
