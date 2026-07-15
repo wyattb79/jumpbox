@@ -31,6 +31,12 @@ resource "aws_instance" "jumpbox" {
   vpc_security_group_ids = [aws_security_group.login_from_here.id]
   iam_instance_profile = aws_iam_instance_profile.this.name
 
+  user_data = <<-EOF
+              #! /bin/bash
+              dnf update -y
+              dnf install -y ansible
+              EOF
+
   tags = {
     Name = "Jumpbox"
   }
