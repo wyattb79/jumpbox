@@ -29,6 +29,7 @@ resource "aws_instance" "jumpbox" {
   subnet_id = aws_subnet.jumpbox_subnet.id
   associate_public_ip_address = true
   vpc_security_group_ids = [aws_security_group.login_from_here.id]
+  iam_instance_profile = aws_iam_instance_profile.this.name
 
   tags = {
     Name = "Jumpbox"
@@ -80,3 +81,51 @@ resource "aws_route_table_association" "igw_assoc" {
   subnet_id = aws_subnet.jumpbox_subnet.id
   route_table_id = aws_route_table.jumpbox_rt.id
 }
+
+resource "aws_iam_role" "this" {
+  name = "jumpbox_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_instance_profile" "this" {
+  name = "jumpbox-instance-profile"
+  role = aws_iam_role.this.name
+}
+
+resource "aws_iam_policy" "this" {
+  name = "jumpbox-policy"
+  path = "/"
+  description = "Policy for the Jumpbox to access resources"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "eks:DescribeCluster"
+        ]
+        Effect = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "this" {
+  role = aws_iam_role.this.name
+  policy_arn = aws_iam_policy.this.arn
+}
+
