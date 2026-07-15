@@ -3,16 +3,16 @@
   gather_facts: no
   tasks:
 
-- name: Get the latest stable Kubernetes version string
-  uri:
-    url: https://dl.k8s.io/release/stable.txt
-    return_content: yes
-  register: k8s_version
-
-- name: Download the corresponding kubectl binary
-  get_url:
-    url: "https://dl.k8s.io/release/{{ k8s_version.content | trim }}/bin/linux/amd64/kubectl"
-    dest: /usr/local/bin/kubectl
-    mode: '0755'
-    owner: root
-    group: root
+    - name: Get the latest stable Kubernetes version string
+      uri:
+        url: https://dl.k8s.io/release/stable.txt
+        return_content: yes
+      register: k8s_version
+    
+    - name: Download the corresponding kubectl binary
+      get_url:
+        url: "https://dl.k8s.io/release/{{ k8s_version.content | trim }}/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+        owner: root
+        group: root
