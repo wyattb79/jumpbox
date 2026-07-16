@@ -35,6 +35,7 @@ resource "aws_instance" "jumpbox" {
               #! /bin/bash
               dnf update -y
               dnf install -y ansible
+              ansible-pull -U ${var.userdata_playbook_url} -i localhost ${var.userdata_playbook_path}
               EOF
 
   tags = {
