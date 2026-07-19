@@ -40,6 +40,7 @@ resource "aws_instance" "jumpbox" {
 
   tags = {
     Name = "Jumpbox"
+    "${var.jumpbox_tag}" = "1"
   }
 }
 

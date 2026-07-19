@@ -27,3 +27,8 @@ variable "userdata_playbook_path" {
   type = string
   description = "path into the url where the main playbook exists"
 }
+
+variable "jumpbox_tag" {
+  type = string
+  description = "tag key to identify an ephemeral jumpbox"
+}
