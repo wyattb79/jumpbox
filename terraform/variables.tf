@@ -32,3 +32,8 @@ variable "jumpbox_tag" {
   type = string
   description = "tag key to identify an ephemeral jumpbox"
 }
+
+variable "resource_arn" {
+  type = string
+  description = "ARN of the resource the jumpbox wants to access"
+}
