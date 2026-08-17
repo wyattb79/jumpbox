@@ -16,3 +16,17 @@
         mode: '0755'
         owner: root
         group: root
+
+    - name: Split S3 URI
+      vars:
+        s3_uri: "{{ s3_pem_path }}"
+        s3_tokens: "{{ s3_uri | regex_replace('^s3://', '') | split('/') }}"
+        s3_bucket: "{{ s3_path_tokens[0] }}"
+        s3_object: "{{ s3_path_tokens[1:] | join('/') }}"
+
+    - name: Download node access PEM
+      aws_s3:
+        bucket: "{{ s3_bucket }}"
+        object: "{{ s3_object }}"
+        dest: "/home/ec2-user"
+        mode: '0600'

@@ -37,3 +37,8 @@ variable "resource_arn" {
   type = string
   description = "ARN of the resource the jumpbox wants to access"
 }
+
+variable "s3_pem_path" {
+  type = string
+  description = "S3 URI of a pem used to login to cluster nodes"
+}
