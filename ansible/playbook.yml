@@ -17,10 +17,14 @@
         owner: root
         group: root
 
+    - name: Install pip
+      package:
+        name: pip
+        state: present
+
     - name: Install python libraries
       pip:
         name:
-          - pip
           - setuptools
           - boto3
           - botocore
