@@ -17,6 +17,14 @@
         owner: root
         group: root
 
+    - name: Install python libraries
+      pip:
+        name:
+          - boto3
+          - botocore
+        state: present
+        executable: pip3
+
     - name: Split S3 URI
       set_fact:
         s3_bucket: "{{ (s3_pem_path | regex_replace('^s3://', '') | split('/'))[0] }}"
