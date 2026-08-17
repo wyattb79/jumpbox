@@ -28,7 +28,6 @@
         object: "{{ s3_object }}"
         dest: "/home/ec2-user/{{ s3_object | basename }}"
         mode: get
-        mode_override: true
 
     - name: Restrict PEM access
       file:
