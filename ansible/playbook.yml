@@ -27,5 +27,10 @@
         bucket: "{{ s3_bucket }}"
         object: "{{ s3_object }}"
         dest: "/home/ec2-user/{{ s3_object | basename }}"
-        mode: '0600'
+        mode: get
         mode_override: true
+
+    - name: Restrict PEM access
+      file:
+        path: "/home/ec2-user/{{ s3_object | basename }}"
+        mode: '600'
