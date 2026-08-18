@@ -130,6 +130,21 @@ resource "aws_iam_policy" "this" {
         Effect = "Allow"
         Resource = "*"
       },
+      {
+        Action = [
+          "s3:listBucket",
+          "s3:getBucketLocation"
+        ]
+        Effect = "Allow"
+        Resource = "arn:aws:s3:::${local.bucket_name}"
+      },
+      {
+        Action = [
+          "s3:getObject"
+        ]
+        Effect = "Allow"
+        Resource = "arn:aws:s3:::${local.bucket_name}/*"
+      }
     ]
   })
 }
