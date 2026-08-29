@@ -43,6 +43,7 @@ resource "aws_instance" "jumpbox" {
     Name = "Jumpbox"
     "${var.jumpbox_tag}" = "1"
     Jumpbox_Resource = var.resource_arn
+    Cluster = "${var.cluster_tag}"
   }
 }
 

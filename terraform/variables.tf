@@ -33,6 +33,11 @@ variable "jumpbox_tag" {
   description = "tag key to identify an ephemeral jumpbox"
 }
 
+variable "cluster_tag" {
+  type = string
+  description = "tag key to identify an EKS cluster the jumpbox requests access into"
+}
+
 variable "resource_arn" {
   type = string
   description = "ARN of the resource the jumpbox wants to access"
