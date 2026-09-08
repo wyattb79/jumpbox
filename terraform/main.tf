@@ -15,7 +15,7 @@ data "aws_ami" "al2023" {
 }
 
 data "http" "my_public_ip" {
-  url = "https://ipv4.icanhazip.com"
+  url = "http://checkip.global.api.aws"
 }
 
 data "aws_availability_zones" "available" {
