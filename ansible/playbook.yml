@@ -52,9 +52,9 @@
       ansible.builtin.yum_repository:
         name: hashicorp
         description: HashiCorp Stable - $basearch
-        baseurl: https://hashicorp.com
+        baseurl: https://rpm.releases.hashicorp.com/RHEL/7/$basearch/stable
         gpgcheck: yes
-        gpgkey: https://hashicorp.com
+        gpgkey: https://rpm.releases.hashicorp.com/gpg
         enabled: yes
       
     - name: Install Terraform package
