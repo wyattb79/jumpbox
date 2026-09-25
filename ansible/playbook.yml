@@ -50,15 +50,15 @@
 
     - name: Add official HashiCorp RPM repository
       ansible.builtin.yum_repository:
-      name: hashicorp
-      description: HashiCorp Stable - $basearch
-      baseurl: https://hashicorp.com
-      gpgcheck: yes
-      gpgkey: https://hashicorp.com
-      enabled: yes
+        name: hashicorp
+        description: HashiCorp Stable - $basearch
+        baseurl: https://hashicorp.com
+        gpgcheck: yes
+        gpgkey: https://hashicorp.com
+        enabled: yes
       
     - name: Install Terraform package
       ansible.builtin.package:
-      name: terraform
-      state: present
-      update_cache: yes
+        name: terraform
+        state: present
+        update_cache: yes
