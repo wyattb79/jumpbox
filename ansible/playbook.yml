@@ -52,7 +52,7 @@
       ansible.builtin.yum_repository:
         name: hashicorp
         description: HashiCorp Stable - $basearch
-        baseurl: https://rpm.releases.hashicorp.com/RHEL/7/$basearch/stable
+        baseurl: https://rpm.releases.hashicorp.com/RHEL/7/stable/$basearch
         gpgcheck: yes
         gpgkey: https://rpm.releases.hashicorp.com/gpg
         enabled: yes
