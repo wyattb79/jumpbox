@@ -44,6 +44,7 @@ resource "aws_instance" "jumpbox" {
     "${var.jumpbox_tag}" = "1"
     Jumpbox_Resource = var.resource_arn
     Cluster = "${var.cluster_tag}"
+    Cluster_Profile = aws_iam_instance_profile.this.name
   }
 }
 
