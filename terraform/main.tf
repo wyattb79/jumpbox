@@ -42,9 +42,9 @@ resource "aws_instance" "jumpbox" {
   tags = {
     Name = "Jumpbox"
     "${var.jumpbox_tag}" = "1"
-    Jumpbox_Resource = var.resource_arn
+    SecurityGroupTag = var.sg_tag
     Cluster = "${var.cluster_tag}"
-    Cluster_Profile = aws_iam_instance_profile.this.name
+    Jumpbox_Profile = aws_iam_role.this.arn
   }
 }
 

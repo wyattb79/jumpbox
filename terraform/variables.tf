@@ -38,9 +38,9 @@ variable "cluster_tag" {
   description = "tag key to identify an EKS cluster the jumpbox requests access into"
 }
 
-variable "resource_arn" {
+variable "sg_tag" {
   type = string
-  description = "ARN of the resource the jumpbox wants to access"
+  description = "tag applied to all security groups that the jumpbox should access"
 }
 
 variable "s3_pem_path" {
