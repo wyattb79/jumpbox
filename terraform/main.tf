@@ -142,6 +142,13 @@ resource "aws_iam_policy" "this" {
       },
       {
         Action = [
+          "ecr:GetAuthorizationToken"
+        ]
+        Effect = "Allow"
+        Resource = "*"
+      },
+      {
+        Action = [
           "s3:getObject"
         ]
         Effect = "Allow"
