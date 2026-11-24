@@ -59,3 +59,9 @@
         name: terraform
         state: present
         update_cache: yes
+
+    - name: Install Docker package via DNF
+      ansible.builtin.dnf:
+        name: docker
+        state: present
+        update_cache: true
