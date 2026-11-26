@@ -65,3 +65,20 @@
         name: docker
         state: present
         update_cache: true
+
+    - name: Install SPAL (Supplementary Packages for Amazon Linux) repository
+      ansible.builtin.dnf:
+        name: spal-release
+        state: present
+
+    - name: Install Podman
+      ansible.builtin.dnf:
+        name: podman
+        state: present
+        update_cache: yes
+
+    - name: Install Helm
+      ansible.builtin.dnf:
+        name: helm
+        state: present
+        update_cache: yes
